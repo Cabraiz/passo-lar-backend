@@ -11,29 +11,32 @@ datasource db {
 }
 
 model Users {
-  id        Int     @default(autoincrement()) @id
-  email     String  
-  name      String
-  password  String
-  Companies Companies[]
+  id          Int        @id @default(autoincrement())
+  email       String  
+  name        String
+  password    String
+  CompanyId   Int?
+  Company     Companies? @relation(fields: [CompanyId], references: [Id])
 }
 
 model Companies {
-  id        Int      @default(autoincrement()) @id
-  name      String
-  website   String
-  cnpj      String
-  locations Locations[]
+  id          Int      @id @default(autoincrement())
+  name        String
+  website     String
+  cnpj        String
+  users       User[]
+  locations   Location[]
 }
 
 model Locations {
-  id        Int      @default(autoincrement()) @id
-  name      String
-  zipcode   String
-  street    String
-  number    String
-  district  String
-  city      String
-  state     String
-  
+  id          Int      @id @default(autoincrement())
+  name        String
+  zipcode     String
+  street      String
+  number      String
+  district    String
+  city        String
+  state       String
+  companyId   Int?
+  company:    Companies? @relation(fields: [CompanyId], references: [Id])
 }
